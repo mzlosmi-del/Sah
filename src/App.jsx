@@ -304,52 +304,65 @@ function evalMoveQuality(state, move, opt) {
 }
 
 // ── Trash talk lines ─────────────────────────────────────────
-// Bot gains advantage → mocks the player
+// Authentic Niš/Leskovac/Vranje dialect
+// - only nominativ + akuzativ (no dativ, no genitiv endings)
+// - "kaj" not "šta", "bolan/bona" as filler, "mori" for women/general
+// - "be" everywhere, "golemo" = big, "džabe" = for nothing
+// - contractions: "ne'š" = nećeš, "ne" = nije sometimes, "ovoj" = ovde
+// - čojek = čovek, "ubav" = lep, "džukac" = pas/loser, "mande" = expletive
+// - modern: "nema spasa", "skroz", "baš", "fejk", "lvl", "lajk"
+
 const BOT_WINNING = [
-  "Ajde bre, kaj prajiš? Mama ti igra bolje od tebe! 😂",
-  "Jao čoveče, ti si k'o slepa kokoška na šahovskoj tabli!",
-  "Bre, dal' ti znaš šta radiš il' samo turčiš figure?",
-  "Majko mila, ovako loše nisam video ni kad Žika Šiponja igra pijan!",
-  "Hahahaha! Idi nauči prvo da igras pa onda dođi kod mene!",
-  "Bre čoveče, ti si meni dao figuru k'o poklon za Božić! Fala lepo! 🎁",
-  "Jel' to potez il' si slučajno kliknuo? Pitam za drugarčeta...",
-  "Bolan, nemoj me nerviraš... Ali ti si stvarno jadan igrač, čovek božji.",
-  "E pa ovo je to! Sad ću te pregazim k'o kamion ciglu!",
-  "Hej, piši kući da kasniš — ovde se dugo patiš! 😄",
-  "Mori, ja sam mislio da ću se oznojim, al' ti si k'o baba na ledu!",
-  "Uzeo sam ti figuru a ti si stojiš k'o kip na trgu. Budi živ!",
-  "Bre, ti igraš šah il' glediš u tabanicu? Makni se malo!",
-  "Ovolko lošo? Jel' si spavao sinoć il' si celu noć gledao u tabu?",
+  "Jao bolan, kaj praviš be? Mama ti bolje igra šah, i ona ne zna pravila 😂",
+  "Be čojek, uzeo sam ti figuru ko što se uzima burek iz tepsiju - lako i bez pitanje!",
+  "Golema sramota! Ovakvo igranje ne sam video ni na pijac ponedeljak!",
+  "Džabe si sedeo, džabe si kliknuo, džabe si došao ovde bolan 😄",
+  "Ti igraš šah il gledaš u ekran ko tele u šarena vrata?",
+  "Ne'š valjda da plačeš sad? Nemoj, bolan, nije kraj sveta - samo tvoj kraj 😅",
+  "Ovoj kod mene se ne prašta ovakvo igranje, be! Ovo je skroz fejk potez!",
+  "Kol'ko lvl si ti uopšte? Nula? Minus? Pitam ozbiljno!",
+  "Vzeo sam ti figuru a ti stojiš ko kip na Trg sloboda. Pomeri se malo!",
+  "Baš si me nasmejao bolan! Nisam se ovako smejao od kako Ćira pao s biciklo!",
+  "Mori, ja mislio da ću se oznojim malo al' ti si ko baba na ledu - opasno za gledanje!",
+  "Šta je to bilo be?? To ti je potez il si mačko nagazio tastatura?",
+  "Nemoj da te je sramota, bolan. Svi počnu loše. Ali ovako loše... to je novo 😬",
+  "Uzmi, uzmi vreme da razmisliš - ionako ne pomaže al' ajde 😏",
+  "Skroz si me razočarao be. Mislio sam da znaš igrati. Grešio sam. Golemo.",
+  "Ovo igranje zaslužuje posebno mesto u muzej loše odluke, mori!",
 ];
 
-// Player gains advantage → bot gets salty / makes excuses
 const PLAYER_WINNING = [
-  "Čekaj čekaj, ja sam se samo zagrejavao! Nemoj da misliš ništa.",
-  "Sačuvaj Bože, beginner's luck. Nema tu ništa od tebe!",
-  "Bre, ovo se nije računalo! Ja sam mislio da igramo na šalu!",
-  "Okej okej, mali je prednost, al' ti si još uvek gubiš na kraju — videćeš!",
-  "Mama mi zvoni, sačekaj malo... (nema šanse da se sklanjam, ali daj odmor!)",
-  "Auu, malo si se raspalio k'o Leskovačka roštiljijada! Al' nema struja dugo!",
-  "Jao, uspeo si nešto. Sačekaj da se skupim, ima još dugo do mata!",
-  "Bre, ne verujem! Valda si guglao potez? Nema šanse da si to sam smislio!",
-  "Okej ti si malo bolji nego što sam mislio... AL SAMO MALO!",
-  "Čovek pogodi jednom i misli da je Kasparo! Smiri se, brate!",
-  "Slučajno si bio dobar. To se desi. Jednom u životu.",
-  "Jel' te neko uči? Ko te uči? Kaži mi da ga nađem i objasnim mu!",
+  "Čekaj čekaj, ja sam se samo zagrejavao be! Ovo ne važi!",
+  "Sačuvaj Bože, beginner's luck čisto. Nema tu ništa od tebe, bolan!",
+  "Ovo se nije računalo! Ja mislio igramo na šalu, ne ozbiljno!",
+  "Okej okej, imaš malo prednost al' ti još gubiš na kraj - vidis!",
+  "Džabe se raduješ, be. Ima još golemo parče igra do kraj!",
+  "Jao mande, malo si se zapalio ko roštilj na vašar! Al' ugasi se brzo, videćeš!",
+  "Ne verujem! Valjda si guglao potez? Nema šanse da si sam smislio ovoj!",
+  "Okej ti si malo bolji nego što mislio sam... AL SAMO MALO, bolan!",
+  "Čojek jednom pogodi i misli da je Kasparo! Smiri se be!",
+  "Slučajno si bio dobar. To se desi. Jednom u život. Uživaj dok traje 😒",
+  "Ko te uči da igraš? Kaži mi da ga nađem i objasnimo mu zajedno!",
+  "Ama baš si me iznenadio. Al' ne brini - iznenađenje kratko traje!",
+  "Mori, uzeo si mi figuru ko što se krade dinja s njiva - nečasno!",
+  "Ajde, ajde, slavi. Ima vremena za plakanje posle, bolan 😤",
+  "Ovo je džabe prednost, be. Ja se skupljam ko fjuze pa ću te pregazim!",
 ];
 
-// Bot checkmates player
 const BOT_CHECKMATE = [
-  "ŠAH-MAT, BOLAN! 🏆 Idi kući, opere se, odmoraj se, ne igraš više šah!",
-  "MATA! Ha! Rekao sam ti! Idi sad pa plači kod mame!",
-  "Gotovo je, čoveče! Šah-mat k'o iz pušće! Nisi me iznervirao ni malo!",
+  "ŠAH-MAT BOLAN! 🏆 Idi kući, opere se, lezi, ne igraš više šah nikad!",
+  "MATA! Ha! Rekao sam ti be! Idi sad pa plači kod mama!",
+  "Gotovo je čojek! Mat ko iz puške! Nisi me iznervirao ni malo, džabe si probao!",
+  "E pa to je to! Mat! Golema pobeda za mene, golema sramota za tebe! Cao 👋",
+  "MATA BOLAN! Sad možeš da pišeš kući da kasniš na večera - gubiš i tamo verovatno!",
 ];
 
-// Player checkmates bot
 const PLAYER_CHECKMATE = [
-  "Ne može biti... Ovo nije fer... Ti si sigurno varao! 😤",
-  "Dobro dobro, pobedio si. AL SAMO OVAJ PUT! Rematch, odmah!",
-  "Bre, čestitam. Al' sledeći put te mlatim k'o tepih!",
+  "Ne može biti... ovo nije fer... sigurno si varao nekako bolan! 😤",
+  "Dobro dobro, pobedio si. AL SAMO OVAJ PUT! Ajde remi, odmah, sad!",
+  "Be, čestitam. Al' sledeći put te mlatim ko tepih ispred vrata!",
+  "Džabe si se radovao, be - sledeći put ja pobeđujem, to ti garantujem!",
+  "Okej si pobedio. Al' nisi ti bolji - ja sam bio loš danas. Golema razlika!",
 ];
 
 const pick = arr => arr[Math.floor(Math.random()*arr.length)];
